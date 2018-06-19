@@ -15,8 +15,6 @@ class DyttSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        ip = response.meta['proxy']
-        print(ip)
         items = []
         for each in response.xpath('//table[@class="tbspan"]'):
             item = DyttspiderItem()

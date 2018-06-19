@@ -4,9 +4,11 @@
 #
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-import random
+
 
 from scrapy import signals
+from fake_useragent import UserAgent
+import random
 
 
 class WtspiderSpiderMiddleware(object):
@@ -61,17 +63,19 @@ class WtspiderDownloaderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
+    # 随机更换换user-agent
+
+    def __init__(self, crawler):
+        super(WtspiderDownloaderMiddleware, self).__init__()
+        self.ua = UserAgent()
+        self.ua_type = crawler.settings.get('RANDOM_UA_TYPE', 'random')  # 从setting文件中读取RANDOM_UA_TYPE值
 
     @classmethod
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.
-        s = cls()
+        s = cls(crawler)
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
-
-    proxy_list = [
-        'http://159.203.126.171:8799',
-    ]
 
     def process_request(self, request, spider):
         # Called for each request that goes through the downloader
@@ -85,9 +89,18 @@ class WtspiderDownloaderMiddleware(object):
         #   installed downloader middleware will be called
         # if not request.meta['proxies']:
         # return None
-        ip = random.choice(self.proxy_list)
-        print('ip地址为*****************'+ip)
-        request.meta['proxy'] = ip
+        def get_ua():
+            return getattr(self.ua, self.ua_type)
+
+        proxy_list = [
+            'http://115.223.244.158:9000',
+        ]
+
+        print("this is request User-Agent:" + get_ua())
+        request.headers.setdefault('User-Agent', get_ua())
+        proxy = random.choice(proxy_list)
+        print("this is request IP:" + proxy)
+        # request.meta['proxy'] = proxy
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
