@@ -99,7 +99,7 @@ class WtspiderDownloaderMiddleware(object):
         print("this is request User-Agent:" + get_ua())
         request.headers.setdefault('User-Agent', get_ua())
         proxy = random.choice(proxy_list)
-        print("this is request IP:" + proxy)
+        print("this is request ip:" + proxy)
         # request.meta['proxy'] = proxy
 
     def process_response(self, request, response, spider):
