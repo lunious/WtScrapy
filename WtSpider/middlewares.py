@@ -7,7 +7,6 @@
 
 
 from scrapy import signals
-from fake_useragent import UserAgent
 import random
 
 
@@ -67,8 +66,8 @@ class WtspiderDownloaderMiddleware(object):
 
     def __init__(self, crawler):
         super(WtspiderDownloaderMiddleware, self).__init__()
-        self.ua = UserAgent()
-        self.ua_type = crawler.settings.get('RANDOM_UA_TYPE', 'random')  # 从setting文件中读取RANDOM_UA_TYPE值
+        self.proxy = crawler.settings.get('MY_PROXY')
+        self.user_agent = crawler.settings.get('MY_USER_AGENT')
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -89,16 +88,9 @@ class WtspiderDownloaderMiddleware(object):
         #   installed downloader middleware will be called
         # if not request.meta['proxies']:
         # return None
-        def get_ua():
-            return getattr(self.ua, self.ua_type)
-
-        proxy_list = [
-            'http://115.223.244.158:9000',
-        ]
-
-        print("this is request User-Agent:" + get_ua())
-        request.headers.setdefault('User-Agent', get_ua())
-        proxy = random.choice(proxy_list)
+        agent = random.choice(self.user_agent)
+        print("this is request user-agent:" + agent)
+        proxy = random.choice(self.proxy)
         print("this is request ip:" + proxy)
         # request.meta['proxy'] = proxy
 
