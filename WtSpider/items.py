@@ -45,9 +45,16 @@ class SinaItem(scrapy.Item):
     content = scrapy.Field()
 
 
-# 全国公共交易品台
+# 全国公共交易平台
 class ScggjyItem(scrapy.Item):
     sTitle = scrapy.Field()
     sDetailLink = scrapy.Field()
     sPubData = scrapy.Field()
     sDetailTitle = scrapy.Field()
+
+
+# 笑话
+class JokeItem(scrapy.Item):
+    jTitle = scrapy.Field()
+    jDetailLink = scrapy.Field()
+    jContent = scrapy.Field()

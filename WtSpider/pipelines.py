@@ -74,3 +74,14 @@ class ScggjyPipeline(object):
 
     def close_spider(self, spider):
         self.connect.close()
+
+
+# 笑话
+class JokePipeline(object):
+    def process_item(self, item, spider):
+
+        fp = open('./data/'+item['jTitle'] + '.txt', 'wb')
+        fp.write(item['jContent'].encode('utf-8'))
+        fp.close()
+
+        return item
