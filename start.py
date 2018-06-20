@@ -1,6 +1,6 @@
 from scrapy import cmdline
 
 min = [
-    'scrapy crawl test', 'scrapy crawl sina', 'scrapy crawl dytt',
+    'scrapy crawl testSpider', 'scrapy crawl sinaspider', 'scrapy crawl dyttspider', 'scrapy crawl scggzySpider',
 ]
-cmdline.execute(min[2].split())
+cmdline.execute(min[3].split())

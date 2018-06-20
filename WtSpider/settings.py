@@ -26,8 +26,8 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# 延迟4秒
-DOWNLOAD_DELAY = 4
+# 延迟6秒
+DOWNLOAD_DELAY = 6
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
@@ -65,8 +65,9 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'WtSpider.pipelines.DyttPipeline': 300,
+    # 'WtSpider.pipelines.DyttPipeline': 300,
     # 'WtSpider.pipelines.SinaPipeline': 300,
+    'WtSpider.pipelines.ScggjyPipeline': 300,
 }
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,6 +89,12 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+MYSQL_HOST = 'localhost'
+MYSQL_DBNAME = 'sc_caiji'
+MYSQL_USER = 'root'
+MYSQL_PASSWD = 'root'
+MYSQL_PORT = 3306
 
 MY_PROXY = [
     'http://115.223.244.158:9000',

@@ -3,7 +3,7 @@ import scrapy
 
 
 class TestspiderSpider(scrapy.Spider):
-    name = 'test'
+    name = 'testSpider'
     allowed_domains = ['test.com']
     start_urls = ['http://www.baidu.com']
 

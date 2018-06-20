@@ -43,3 +43,11 @@ class SinaItem(scrapy.Item):
     # 文章标题和内容
     head = scrapy.Field()
     content = scrapy.Field()
+
+
+# 全国公共交易品台
+class ScggjyItem(scrapy.Item):
+    sTitle = scrapy.Field()
+    sDetailLink = scrapy.Field()
+    sPubData = scrapy.Field()
+    sDetailTitle = scrapy.Field()

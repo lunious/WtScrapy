@@ -6,8 +6,14 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
 
-
 # 电影天堂
+import logging
+
+import pymysql
+
+from WtSpider import settings
+
+
 class DyttPipeline(object):
 
     def __init__(self):
@@ -36,3 +42,35 @@ class SinaPipeline(object):
         fp.close()
 
         return item
+
+
+# 全国公共交易网（四川）
+class ScggjyPipeline(object):
+
+    def __init__(self):
+        self.connect = pymysql.connect(
+            host=settings.MYSQL_HOST,
+            db=settings.MYSQL_DBNAME,
+            user=settings.MYSQL_USER,
+            passwd=settings.MYSQL_PASSWD,
+            charset='utf8',
+            use_unicode=True
+        )
+        self.cursor = self.connect.cursor()
+
+    def process_item(self, item, spider):
+        try:
+            self.cursor.execute(
+                "insert into scggjy (title, pubData, detailLink,detailTitle) value(%s, %s, %s,%s)",
+                (item['sTitle'],
+                 item['sPubData'],
+                 item['sDetailLink'],
+                 item['sDetailTitle'],
+                 ))
+            self.connect.commit()
+        except Exception as error:
+            logging.log(error)
+        return item
+
+    def close_spider(self, spider):
+        self.connect.close()

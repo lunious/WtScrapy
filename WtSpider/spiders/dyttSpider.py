@@ -5,7 +5,7 @@ from WtSpider.items import DyttspiderItem
 
 
 class DyttSpider(scrapy.Spider):
-    name = 'dytt'
+    name = 'dyttSpider'
     allowed_domains = ['www.ygdy8.net']
 
     url = 'http://www.ygdy8.net/html/gndy/dyzz/list_23_'

@@ -6,7 +6,7 @@ from WtSpider.items import SinaItem
 
 
 class SinaSpider(scrapy.Spider):
-    name = 'sina'
+    name = 'sinaSpider'
     allowed_domain = ['sina.com.cn']
     start_urls = ['http://news.sina.com.cn/guide/']
 
