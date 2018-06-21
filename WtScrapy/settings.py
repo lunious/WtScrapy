@@ -94,7 +94,7 @@ ITEM_PIPELINES = {
 MYSQL_HOST = 'localhost'
 MYSQL_DBNAME = 'sc_caiji'
 MYSQL_USER = 'root'
-MYSQL_PASSWD = 'root'
+MYSQL_PASSWD = 'Wzy562400.'
 MYSQL_PORT = 3306
 
 MY_PROXY = [
