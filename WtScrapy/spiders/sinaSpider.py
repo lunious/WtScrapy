@@ -2,7 +2,7 @@ import os
 
 import scrapy
 
-from WtSpider.items import SinaItem
+from WtScrapy.items import SinaItem
 
 
 class SinaSpider(scrapy.Spider):

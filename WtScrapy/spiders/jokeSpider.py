@@ -3,7 +3,7 @@ import os
 
 import scrapy
 
-from WtSpider.items import JokeItem
+from WtScrapy.items import JokeItem
 
 
 class JokespiderSpider(scrapy.Spider):

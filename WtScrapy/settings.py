@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for WtSpider project
+# Scrapy settings for WtScrapy project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,13 +9,13 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'WtSpider'
+BOT_NAME = 'WtScrapy'
 
-SPIDER_MODULES = ['WtSpider.spiders']
-NEWSPIDER_MODULE = 'WtSpider.spiders'
+SPIDER_MODULES = ['WtScrapy.spiders']
+NEWSPIDER_MODULE = 'WtScrapy.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'WtSpider (+http://www.yourdomain.com)'
+# USER_AGENT = 'WtScrapy (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 # 是否遵循爬虫规则（网站定义的哪些可爬，哪些禁止爬取）
@@ -27,7 +27,7 @@ ROBOTSTXT_OBEY = False
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 # 延迟6秒
- DOWNLOAD_DELAY = 6
+DOWNLOAD_DELAY = 6
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
@@ -47,13 +47,13 @@ COOKIES_ENABLED = False
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'WtSpider.middlewares.WtspiderSpiderMiddleware': 543,
+#    'WtScrapy.middlewares.WtspiderSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    'WtSpider.middlewares.WtspiderDownloaderMiddleware': 100,
+    'WtScrapy.middlewares.WtscrapyDownloaderMiddleware': 100,
 }
 
 # Enable or disable extensions
@@ -65,10 +65,10 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'WtSpider.pipelines.DyttPipeline': 300,
-    # 'WtSpider.pipelines.SinaPipeline': 300,
-    # 'WtSpider.pipelines.ScggjyPipeline': 300,
-    # 'WtSpider.pipelines.JokePipeline': 300,
+    # 'WtScrapy.pipelines.DyttPipeline': 300,
+    # 'WtScrapy.pipelines.SinaPipeline': 300,
+    # 'WtScrapy.pipelines.ScggjyPipeline': 300,
+    # 'WtScrapy.pipelines.JokePipeline': 300,
 }
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

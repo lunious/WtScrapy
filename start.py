@@ -8,4 +8,4 @@ min = [
     'scrapy crawl jokeSpider',
 
 ]
-cmdline.execute(min[2].split())
+cmdline.execute(min[0].split())

@@ -8,7 +8,7 @@
 import scrapy
 
 
-class WtspiderItem(scrapy.Item):
+class WtscrapyItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass

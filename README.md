@@ -1,2 +1,2 @@
 # WtSpider
-网络爬虫练习
+python爬虫项目，采用Scrapy框架
