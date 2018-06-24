@@ -11,7 +11,7 @@ import logging
 
 import pymysql
 
-from WtScrapy import settings
+from wscrapy import settings
 
 
 class DyttPipeline(object):

@@ -3,7 +3,7 @@ import datetime
 import json
 import time
 import scrapy
-from WtScrapy.items import ScggjyItem
+from wscrapy.items import ScggjyItem
 
 
 class ScggzyspiderSpider(scrapy.Spider):

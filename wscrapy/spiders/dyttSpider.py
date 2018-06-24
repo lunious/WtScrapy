@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 
-from WtScrapy.items import DyttspiderItem
+from wscrapy.items import DyttspiderItem
 
 
 class DyttSpider(scrapy.Spider):
