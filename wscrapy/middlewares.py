@@ -88,10 +88,11 @@ class WtscrapyDownloaderMiddleware(object):
         #   installed downloader middleware will be called
         # if not request.meta['proxies']:
         # return None
+        # 设置请求头
         agent = random.choice(self.user_agent)
-        print("this is request user-agent:" + agent)
-        proxy = random.choice(self.proxy)
-        print("this is request ip:" + proxy)
+        request.headers.setdefault('User-Agent', agent)
+        # 设置代理
+        # proxy = random.choice(self.proxy)
         # request.meta['proxy'] = proxy
 
     def process_response(self, request, response, spider):

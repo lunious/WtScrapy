@@ -20,21 +20,23 @@ NEWSPIDER_MODULE = 'wscrapy.spiders'
 # Obey robots.txt rules
 # 是否遵循爬虫规则（网站定义的哪些可爬，哪些禁止爬取）
 ROBOTSTXT_OBEY = False
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# 延迟6秒
-DOWNLOAD_DELAY = 6
+# 延迟2秒
+DOWNLOAD_DELAY = 2
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-COOKIES_ENABLED = False
-
+COOKIES_ENABLED = True
+# 识别状态吗
+HTTPERROR_ALLOWED_CODES = [403]
 # Disable Telnet Console (enabled by default)
 # TELNETCONSOLE_ENABLED = False
 
@@ -69,6 +71,7 @@ ITEM_PIPELINES = {
     # 'wscrapy.pipelines.SinaPipeline': 300,
     # 'wscrapy.pipelines.ScggjyPipeline': 300,
     # 'wscrapy.pipelines.JokePipeline': 300,
+    'wscrapy.pipelines.ZakerPipeline': 300,
 }
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -92,7 +95,7 @@ ITEM_PIPELINES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 MYSQL_HOST = 'localhost'
-MYSQL_DBNAME = 'sc_caiji'
+MYSQL_DBNAME = 'wscrapy'
 MYSQL_USER = 'root'
 MYSQL_PASSWD = 'Wzy562400.'
 MYSQL_PORT = 3306

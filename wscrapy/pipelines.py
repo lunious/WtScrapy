@@ -79,9 +79,41 @@ class ScggjyPipeline(object):
 # 笑话
 class JokePipeline(object):
     def process_item(self, item, spider):
-
-        fp = open('./data/'+item['jTitle'] + '.txt', 'wb')
+        fp = open('./data/' + item['jTitle'] + '.txt', 'wb')
         fp.write(item['jContent'].encode('utf-8'))
         fp.close()
 
         return item
+
+
+# zaker新闻
+class ZakerPipeline(object):
+
+    def __init__(self):
+        self.connect = pymysql.connect(
+            host=settings.MYSQL_HOST,
+            db=settings.MYSQL_DBNAME,
+            user=settings.MYSQL_USER,
+            passwd=settings.MYSQL_PASSWD,
+            charset='utf8',
+            use_unicode=True
+        )
+        self.cursor = self.connect.cursor()
+
+    def process_item(self, item, spider):
+        try:
+            self.cursor.execute(
+                "insert into zaker_news (zTitle, zSubtitle, sSubImageLink,zDetailLink,zType) value(%s, %s, %s,%s,%s)",
+                (item['zTitle'],
+                 item['zSubtitle'],
+                 item['sSubImageLink'],
+                 item['zDetailLink'],
+                 item['zType'],
+                 ))
+            self.connect.commit()
+        except Exception as error:
+            logging.log(error)
+        return item
+
+    def close_spider(self, spider):
+        self.connect.close()

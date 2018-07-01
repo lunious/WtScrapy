@@ -58,3 +58,12 @@ class JokeItem(scrapy.Item):
     jTitle = scrapy.Field()
     jDetailLink = scrapy.Field()
     jContent = scrapy.Field()
+
+
+# zaker
+class ZakerItem(scrapy.Item):
+    zTitle = scrapy.Field()
+    zSubtitle = scrapy.Field()
+    sSubImageLink = scrapy.Field()
+    zDetailLink = scrapy.Field()
+    zType = scrapy.Field()
