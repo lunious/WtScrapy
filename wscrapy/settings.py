@@ -94,8 +94,8 @@ ITEM_PIPELINES = {
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MYSQL_HOST = 'localhost'
-MYSQL_DBNAME = 'wscrapy'
+MYSQL_HOST = 'localhost'  # ''120.78.161.254'  # 阿里云地址
+MYSQL_DBNAME = 'wdjango'
 MYSQL_USER = 'root'
 MYSQL_PASSWD = 'Wzy562400.'
 MYSQL_PORT = 3306
