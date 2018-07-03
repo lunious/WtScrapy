@@ -103,7 +103,7 @@ class ZakerPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor.execute(
-                "insert into zaker_news (zTitle, zSubtitle, sSubImageLink,zDetailLink,zType) value(%s, %s, %s,%s,%s)",
+                "INSERT INTO zaker_news (zTitle, zSubtitle, sSubImageLink,zDetailLink,zType) VALUES(%s, %s, %s,%s,%s) ON DUPLICATE KEY UPDATE zSubtitle = zSubtitle",
                 (item['zTitle'],
                  item['zSubtitle'],
                  item['sSubImageLink'],
