@@ -61,11 +61,12 @@ class ScggjyPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor.execute(
-                "insert into scggjy (title, pubData, detailLink,detailTitle) value(%s, %s, %s,%s)",
-                (item['sTitle'],
-                 item['sPubData'],
-                 item['sDetailLink'],
-                 item['sDetailTitle'],
+                "insert into sggjyzbjg (reportTitle,sysTime,url,entryName,entryOwner) value(%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE entryName = entryName",
+                (item['reportTitle'],
+                 item['sysTime'],
+                 item['url'],
+                 item['entryName'],
+                 item['entryOwner'],
                  ))
             self.connect.commit()
         except Exception as error:

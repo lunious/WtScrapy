@@ -69,9 +69,9 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     # 'wscrapy.pipelines.DyttPipeline': 300,
     # 'wscrapy.pipelines.SinaPipeline': 300,
-    # 'wscrapy.pipelines.ScggjyPipeline': 300,
+    'wscrapy.pipelines.ScggjyPipeline': 300,
     # 'wscrapy.pipelines.JokePipeline': 300,
-    'wscrapy.pipelines.ZakerPipeline': 300,
+    # 'wscrapy.pipelines.ZakerPipeline': 300,
 }
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
