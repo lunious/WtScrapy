@@ -53,6 +53,8 @@ class ScggjyItem(scrapy.Item):
     url = scrapy.Field()
     entryName = scrapy.Field()
     entryOwner = scrapy.Field()
+    ownerTel = scrapy.Field()
+    tenderee = scrapy.Field()
 
 # 笑话
 class JokeItem(scrapy.Item):

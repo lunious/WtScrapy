@@ -48,6 +48,8 @@ class ScggzyspiderSpider(scrapy.Spider):
         item = response.meta['meta']
         entryName = response.xpath('//*[@id="Label_SECTIONNAME2"]/text()')
         entryOwner = response.xpath('//*[@id="Label_OWNERNAME"]/text()')
+        ownerTel = response.xpath('//*[@id="Label_OWNERPHONE"]/text()')
+        tenderee = response.xpath('//*[@id="Label_TENDERERNAME"]/text()')
         if entryName:
             item['entryName'] = entryName.extract()[0]
         else:
@@ -56,4 +58,12 @@ class ScggzyspiderSpider(scrapy.Spider):
             item['entryOwner'] = entryOwner.extract()[0]
         else:
             item['entryOwner'] = ''
+        if ownerTel:
+            item['ownerTel'] = ownerTel.extract()[0]
+        else:
+            item['ownerTel'] = ''
+        if tenderee:
+            item['tenderee'] = tenderee.extract()[0]
+        else:
+            item['tenderee'] = ''
         yield item
