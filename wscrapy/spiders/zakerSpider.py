@@ -3,6 +3,7 @@ import json
 
 import scrapy
 from wscrapy.items import ZakerItem
+import datetime
 
 
 class ZakerspiderSpider(scrapy.Spider):
@@ -35,6 +36,7 @@ class ZakerspiderSpider(scrapy.Spider):
                 item['sSubImageLink'] = ''
             item['zDetailLink'] = each.xpath('./div[@class="article flex-1"]/h2/a/@href').extract()[0][2:-1]
             item['zType'] = type
+            item['zInsertData'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             yield item
         nextUrl = response.xpath('//*[@id="nexturl"]/@value').extract()[0][2:]
         yield scrapy.Request(url='http://' + nextUrl, meta={'meta': type}, callback=self.second_parse)
@@ -57,6 +59,7 @@ class ZakerspiderSpider(scrapy.Spider):
                 item['sSubImageLink'] = ''
             item['zDetailLink'] = each['href'][2:-1]
             item['zType'] = type
+            item['zInsertData'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             yield item
 
         # 判断有无下一页

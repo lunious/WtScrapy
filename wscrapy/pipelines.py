@@ -103,12 +103,13 @@ class ZakerPipeline(object):
     def process_item(self, item, spider):
         try:
             self.cursor.execute(
-                "INSERT INTO zaker_news (zTitle, zSubtitle, sSubImageLink,zDetailLink,zType) VALUES(%s, %s, %s,%s,%s) ON DUPLICATE KEY UPDATE zSubtitle = zSubtitle",
+                "INSERT INTO zaker_news (zTitle, zSubtitle, sSubImageLink,zDetailLink,zType,zInsertData) VALUES(%s, %s, %s,%s,%s,%s) ON DUPLICATE KEY UPDATE zSubtitle = zSubtitle",
                 (item['zTitle'],
                  item['zSubtitle'],
                  item['sSubImageLink'],
                  item['zDetailLink'],
                  item['zType'],
+                 item['zInsertData'],
                  ))
             self.connect.commit()
         except Exception as error:

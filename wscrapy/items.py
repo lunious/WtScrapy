@@ -67,3 +67,4 @@ class ZakerItem(scrapy.Item):
     sSubImageLink = scrapy.Field()
     zDetailLink = scrapy.Field()
     zType = scrapy.Field()
+    zInsertData = scrapy.Field()
