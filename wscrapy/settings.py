@@ -73,10 +73,13 @@ ITEM_PIPELINES = {
     # 'wscrapy.pipelines.JokePipeline': 300,
     # 'wscrapy.pipelines.ZakerPipeline': 300,
     # 启用MatplotlibPipeline
-    'wscrapy.pipelines.MatplotlibPipeline': 1,
+    # 'wscrapy.pipelines.MatplotlibPipeline': 1,
+    'scrapy.pipelines.images.ImagesPipeline': 1,
 }
 # 指定文件下载目录
-FILES_STORE = 'examples_file'
+FILES_STORE = 'download_file'
+# 指定图片下载目录
+IMAGES_STORE = 'download_images'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 # AUTOTHROTTLE_ENABLED = True
