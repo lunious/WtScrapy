@@ -6,14 +6,16 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
 
-# 电影天堂
 import logging
 
 import pymysql
 
 from wscrapy import settings
+from scrapy.pipelines.files import FilesPipeline
+from urllib.parse import urlparse
+from os.path import basename, dirname, join
 
-
+# 电影天堂
 class DyttPipeline(object):
 
     def __init__(self):
@@ -122,3 +124,11 @@ class ZakerPipeline(object):
 
     def close_spider(self, spider):
         self.connect.close()
+
+
+# Matplotlib
+class MatplotlibPipeline(FilesPipeline):
+    def file_path(self, request, response=None, info=None):
+        path = urlparse(request.url).path
+        return join(basename(dirname(path)),basename(path))
+

@@ -69,10 +69,14 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     # 'wscrapy.pipelines.DyttPipeline': 300,
     # 'wscrapy.pipelines.SinaPipeline': 300,
-    'wscrapy.pipelines.ScggjyPipeline': 300,
+    # 'wscrapy.pipelines.ScggjyPipeline': 300,
     # 'wscrapy.pipelines.JokePipeline': 300,
     # 'wscrapy.pipelines.ZakerPipeline': 300,
+    # 启用MatplotlibPipeline
+    'wscrapy.pipelines.MatplotlibPipeline': 1,
 }
+# 指定文件下载目录
+FILES_STORE = 'examples_file'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 # AUTOTHROTTLE_ENABLED = True

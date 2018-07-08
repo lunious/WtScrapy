@@ -56,6 +56,7 @@ class ScggjyItem(scrapy.Item):
     ownerTel = scrapy.Field()
     tenderee = scrapy.Field()
 
+
 # 笑话
 class JokeItem(scrapy.Item):
     jTitle = scrapy.Field()
@@ -71,3 +72,9 @@ class ZakerItem(scrapy.Item):
     zDetailLink = scrapy.Field()
     zType = scrapy.Field()
     zInsertData = scrapy.Field()
+
+
+# Matplotlib
+class MatplotlibItem(scrapy.Item):
+    file_urls = scrapy.Field()
+    files = scrapy.Field()
