@@ -15,6 +15,7 @@ from scrapy.pipelines.files import FilesPipeline
 from urllib.parse import urlparse
 from os.path import basename, dirname, join
 
+
 # 电影天堂
 class DyttPipeline(object):
 
@@ -86,6 +87,11 @@ class ScggjyPipeline(object):
                 self.connect.commit()
             except Exception as error:
                 logging.log(error)
+            try:
+                self.cursor.execute("Insert into entryjglist(entryName,sysTime,type,entity,entityId) select reportTitle,sysTime,'工程中标结果','sggjyzbjg',id from sggjyzbjg where id not in(select entityId from entryjglist where  entity ='sggjyzbjg' ) ")
+                self.connect.commit()
+            except Exception as error:
+                logging.log(error)
             return item
 
     def close_spider(self, spider):
@@ -140,5 +146,4 @@ class ZakerPipeline(object):
 class MatplotlibPipeline(FilesPipeline):
     def file_path(self, request, response=None, info=None):
         path = urlparse(request.url).path
-        return join(basename(dirname(path)),basename(path))
-
+        return join(basename(dirname(path)), basename(path))

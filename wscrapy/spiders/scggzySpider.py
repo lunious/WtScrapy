@@ -41,7 +41,9 @@ class ScggzyspiderSpider(scrapy.Spider):
     def detail_parse(self, response):
         item = response.meta['meta']
         res = response.xpath('//*[@id="hidSeven0"]/@value').extract()
-        # print(res[0])
+        # result = Selector(text=res[0]).xpath('//html/body')
+        # result1 = result.xpath('//div[@class="tablediv"]/table[1]/tr[1]/td[2]/text()').extract()
+        # print(result1)
         entryName = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[1]/td[2]/text()').extract()
         entryOwner = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[2]/td[2]/text()').extract()
         ownerTel = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[2]/td[4]/text()').extract()
@@ -54,17 +56,44 @@ class ScggzyspiderSpider(scrapy.Spider):
         publicityPeriod = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[6]/td[2]/text()').extract()
         bigPrice = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[6]/td[4]/text()').extract()
         one = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td/text()').extract()
-        one_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/th[2]/text()').extract()
-        one_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/th[3]/text()').extract()
-        one_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/th[4]/text()').extract()
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[2]/text()').extract():
+            one_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[2]/text()').extract()
+        else:
+            one_1 = ['/']
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[3]/text()').extract():
+            one_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[3]/text()').extract()
+        else:
+            one_2 = ['/']
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[4]/text()').extract():
+            one_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[4]/text()').extract()
+        else:
+            one_3 = ['/']
         two = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/td/text()').extract()
-        two_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[2]/text()').extract()
-        two_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[3]/text()').extract()
-        two_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[4]/text()').extract()
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[2]/text()').extract():
+            two_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[2]/text()').extract()
+        else:
+            two_1 = ['/']
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[3]/text()').extract():
+            two_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[3]/text()').extract()
+        else:
+            two_2 = ['/']
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[4]/text()').extract():
+            two_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[4]/text()').extract()
+        else:
+            two_3 = ['/']
         three = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/td/text()').extract()
-        three_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[2]/text()').extract()
-        three_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[3]/text()').extract()
-        three_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[4]/text()').extract()
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[2]/text()').extract():
+            three_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[2]/text()').extract()
+        else:
+            three_1 = ['/']
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[3]/text()').extract():
+            three_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[3]/text()').extract()
+        else:
+            three_2 = ['/']
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[4]/text()').extract():
+            three_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[4]/text()').extract()
+        else:
+            three_3 = ['/']
         if entryName:
             item['entryName'] = entryName[0]
         else:
@@ -110,15 +139,15 @@ class ScggzyspiderSpider(scrapy.Spider):
         else:
             item['bigPrice'] = ''
         if one:
-            item['oneTree'] = one[0]+'_'+one_1[0]+'_'+one_2[0]+'_'+one_3[0]
+            item['oneTree'] = one[0] + '_' + one_1[0] + '_' + one_2[0] + '_' + one_3[0]
         else:
             item['oneTree'] = ''
         if two:
-            item['twoTree'] = two[0]+'_'+two_1[0]+'_'+two_2[0]+'_'+two_3[0]
+            item['twoTree'] = two[0] + '_' + two_1[0] + '_' + two_2[0] + '_' + two_3[0]
         else:
             item['twoTree'] = ''
         if three:
-            item['threeTree'] = three[0]+'_'+three_1[0]+'_'+three_2[0]+'_'+three_3[0]
+            item['threeTree'] = three[0] + '_' + three_1[0] + '_' + three_2[0] + '_' + three_3[0]
         else:
             item['threeTree'] = ''
         yield item
