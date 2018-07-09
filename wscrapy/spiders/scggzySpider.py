@@ -6,6 +6,7 @@ import scrapy
 from wscrapy.items import ScggjyItem
 from scrapy.selector import Selector
 
+
 class ScggzyspiderSpider(scrapy.Spider):
     name = 'scggzySpider'
     # allowed_domains = ['scggzy.gov.cn']
@@ -33,67 +34,97 @@ class ScggzyspiderSpider(scrapy.Spider):
             for item in items:
                 yield scrapy.Request(url=item['url'], meta={'meta': item}, callback=self.detail_parse)
 
-            # if self.page < pageCount:
-            #     self.page += 1
-            #
-            # yield scrapy.Request(url=self.url + '&page=' + str(self.page) + '&parm=' + str(self.timestamp))
+            if self.page < pageCount:
+                self.page += 1
+
+            yield scrapy.Request(url=self.url + '&page=' + str(self.page) + '&parm=' + str(self.timestamp))
 
     def detail_parse(self, response):
         item = response.meta['meta']
         res = response.xpath('//*[@id="hidSeven0"]/@value').extract()
-        # result = Selector(text=res[0]).xpath('//html/body')
-        # result1 = result.xpath('//div[@class="tablediv"]/table[1]/tr[1]/td[2]/text()').extract()
-        # print(result1)
-        entryName = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[1]/td[2]/text()').extract()
-        entryOwner = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[2]/td[2]/text()').extract()
-        ownerTel = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[2]/td[4]/text()').extract()
-        tenderee = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[3]/td[2]/text()').extract()
-        tendereeTel = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[3]/td[4]/text()').extract()
-        biddingAgency = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[4]/td[2]/text()').extract()
-        biddingAgencTel = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[4]/td[4]/text()').extract()
-        placeAddress = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[5]/td[2]/text()').extract()
-        placeTime = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[5]/td[4]/text()').extract()
-        publicityPeriod = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[6]/td[2]/text()').extract()
-        bigPrice = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]/tr[6]/td[4]/text()').extract()
-        one = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td/text()').extract()
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[2]/text()').extract():
-            one_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[2]/text()').extract()
+        entryName = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[1]/td[2]/text()').extract()
+        entryOwner = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[2]/td[2]/text()').extract()
+        ownerTel = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[2]/td[4]/text()').extract()
+        tenderee = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[3]/td[2]/text()').extract()
+        tendereeTel = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[3]/td[4]/text()').extract()
+        biddingAgency = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[4]/td[2]/text()').extract()
+        biddingAgencTel = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[4]/td[4]/text()').extract()
+        placeAddress = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[5]/td[2]/text()').extract()
+        placeTime = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[5]/td[4]/text()').extract()
+        publicityPeriod = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[6]/td[2]/text()').extract()
+        bigPrice = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[6]/td[4]/text()').extract()
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[2]/text()').extract():
+            one = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[2]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td/text()').extract():
+            one = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td/text()').extract()
         else:
-            one_1 = ['/']
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[3]/text()').extract():
-            one_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[3]/text()').extract()
+            one = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[3]/text()').extract():
+            one_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[3]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[2]/text()').extract():
+            one_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[2]/text()').extract()
         else:
-            one_2 = ['/']
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[4]/text()').extract():
-            one_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[2]/td[4]/text()').extract()
+            one_1 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[4]/text()').extract():
+            one_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[4]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[3]/text()').extract():
+            one_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[3]/text()').extract()
         else:
-            one_3 = ['/']
-        two = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/td/text()').extract()
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[2]/text()').extract():
-            two_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[2]/text()').extract()
+            one_2 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[5]/text()').extract():
+            one_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[5]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[4]/text()').extract():
+            one_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[4]/text()').extract()
         else:
-            two_1 = ['/']
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[3]/text()').extract():
-            two_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[3]/text()').extract()
+            one_3 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[2]/text()').extract():
+            two = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[2]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td/text()').extract():
+            two = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td/text()').extract()
         else:
-            two_2 = ['/']
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[4]/text()').extract():
+            two = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[3]/text()').extract():
+            two_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[3]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[2]/text()').extract():
+            two_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[2]/text()').extract()
+        else:
+            two_1 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[4]/text()').extract():
+            two_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[4]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[3]/text()').extract():
+            two_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[3]/text()').extract()
+        else:
+            two_2 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/td[4]/text()').extract():
+            two_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/td[4]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[4]/text()').extract():
             two_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[3]/th[4]/text()').extract()
         else:
-            two_3 = ['/']
-        three = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/td/text()').extract()
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[2]/text()').extract():
-            three_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[2]/text()').extract()
+            two_3 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[2]/text()').extract():
+            three = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[2]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td/text()').extract():
+            three = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td/text()').extract()
         else:
-            three_1 = ['/']
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[3]/text()').extract():
+            three = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[3]/text()').extract():
+            three_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[3]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[2]/text()').extract():
+            three_1 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[2]/text()').extract()
+        else:
+            three_1 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/td[4]/text()').extract():
+            three_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/td[4]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[3]/text()').extract():
             three_2 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[3]/text()').extract()
         else:
-            three_2 = ['/']
-        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[4]/text()').extract():
-            three_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]/tr[4]/th[4]/text()').extract()
+            three_2 = '/'
+        if Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[5]/text()').extract():
+            three_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[5]/text()').extract()
+        elif Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[4]/text()').extract():
+            three_3 = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[4]/text()').extract()
         else:
-            three_3 = ['/']
+            three_3 = '/'
         if entryName:
             item['entryName'] = entryName[0]
         else:
