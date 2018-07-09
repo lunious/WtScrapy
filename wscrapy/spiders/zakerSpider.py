@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 import json
-
 import scrapy
 from wscrapy.items import ZakerItem
 import datetime
-
 
 class ZakerspiderSpider(scrapy.Spider):
     name = 'zakerSpider'
@@ -27,6 +25,7 @@ class ZakerspiderSpider(scrapy.Spider):
         type = response.meta['meta']
         for each in response.xpath('//*[@id="section"]/div[@class="figure flex-block"]'):
             item = ZakerItem()
+
             item['zTitle'] = each.xpath('./div[@class="article flex-1"]/h2/a/@title').extract()[0]
             item['zSubtitle'] = each.xpath('./div[@class="article flex-1"]/div/span[1]/text()').extract()[0]
             imageLink = each.xpath('./a/@style').extract()

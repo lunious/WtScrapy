@@ -79,7 +79,7 @@ SPIDER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     # 'wscrapy.pipelines.DyttPipeline': 300,
     # 'wscrapy.pipelines.SinaPipeline': 300,
-    # 'wscrapy.pipelines.ScggjyPipeline': 300,
+    'wscrapy.pipelines.ScggjyPipeline': 300,
     # 'wscrapy.pipelines.JokePipeline': 300,
     # 'wscrapy.pipelines.ZakerPipeline': 300,
     # 启用MatplotlibPipeline

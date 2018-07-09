@@ -64,7 +64,7 @@ class ScggjyPipeline(object):
         if item['entryOwner'] != '':
             try:
                 self.cursor.execute(
-                    "insert into sggjyzbjg (reportTitle,sysTime,url,entryName,entryOwner,ownerTel,tenderee) value(%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE entryName = entryName",
+                    "insert into sggjyzbjg (reportTitle,sysTime,url,entryName,entryOwner,ownerTel,tenderee,tendereeTel,biddingAgency,biddingAgencTel,placeAddress,placeTime,publicityPeriod,bigPrice,oneTree,twoTree,threeTree) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE entryName = entryName",
                     (item['reportTitle'],
                      item['sysTime'],
                      item['url'],
@@ -72,6 +72,16 @@ class ScggjyPipeline(object):
                      item['entryOwner'],
                      item['ownerTel'],
                      item['tenderee'],
+                     item['tendereeTel'],
+                     item['biddingAgency'],
+                     item['biddingAgencTel'],
+                     item['placeAddress'],
+                     item['placeTime'],
+                     item['publicityPeriod'],
+                     item['bigPrice'],
+                     item['oneTree'],
+                     item['twoTree'],
+                     item['threeTree'],
                      ))
                 self.connect.commit()
             except Exception as error:

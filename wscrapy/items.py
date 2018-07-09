@@ -47,7 +47,6 @@ class SinaItem(scrapy.Item):
 
 # 全国公共交易平台(四川)
 class ScggjyItem(scrapy.Item):
-    itInfo = scrapy.Field()
     reportTitle = scrapy.Field()
     sysTime = scrapy.Field()
     url = scrapy.Field()
@@ -55,6 +54,23 @@ class ScggjyItem(scrapy.Item):
     entryOwner = scrapy.Field()
     ownerTel = scrapy.Field()
     tenderee = scrapy.Field()
+    tendereeTel = scrapy.Field()
+    biddingAgency = scrapy.Field()
+    biddingAgencTel = scrapy.Field()
+    placeAddress = scrapy.Field()
+    placeTime = scrapy.Field()
+    publicityPeriod = scrapy.Field()
+    bigPrice = scrapy.Field()
+    changeReason = scrapy.Field()
+    oneTree = scrapy.Field()
+    twoTree = scrapy.Field()
+    threeTree = scrapy.Field()
+    treeCount = scrapy.Field()
+    oneCompany = scrapy.Field()
+    onePrice = scrapy.Field()
+    oneReviewPrice = scrapy.Field()
+    oneScore = scrapy.Field()
+    count = scrapy.Field()
 
 
 # 笑话
