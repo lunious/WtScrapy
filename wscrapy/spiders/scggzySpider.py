@@ -67,7 +67,7 @@ class ScggzyspiderSpider(scrapy.Spider):
         for i in twoTree.extract():
             content2 += i.strip() + '_'
         if content2.startswith('_'):
-            item['twoTree'] = content1[6:-2].replace('__', '_')
+            item['twoTree'] = content2[6:-2].replace('__', '_')
         else:
             item['twoTree'] = content2[4:-2]
         threeTree = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]//text()')
@@ -75,9 +75,9 @@ class ScggzyspiderSpider(scrapy.Spider):
         for i in threeTree.extract():
             content3 += i.strip() + '_'
         if content3.startswith('_'):
-            item['threeTree'] = content1[6:-2].replace('__', '_')
+            item['threeTree'] = content3[6:-2].replace('__', '_')
         else:
-            item['threeTree'] = content2[4:-2]
+            item['threeTree'] = content3[4:-2]
 
         if entryName:
             item['entryName'] = entryName[0]
