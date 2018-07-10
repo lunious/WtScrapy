@@ -53,8 +53,8 @@ class ScggjyPipeline(object):
             db=settings.MYSQL_DBNAME,
             user=settings.MYSQL_USER,
             passwd=settings.MYSQL_PASSWD,
-            charset='utf8',
-            use_unicode=True
+            # charset='utf8',
+            # use_unicode=True
         )
         self.cursor = self.connect.cursor()
 
@@ -63,7 +63,7 @@ class ScggjyPipeline(object):
         if item['entryOwner'] != '':
             try:
                 self.cursor.execute(
-                    "insert into sggjyzbjg (reportTitle,sysTime,url,entryName,entryOwner,ownerTel,tenderee,tendereeTel,biddingAgency,biddingAgencTel,placeAddress,placeTime,publicityPeriod,bigPrice,oneTree,twoTree,threeTree,treeCount) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE entryName = entryName",
+                    "insert into sggjyzbjg (reportTitle,sysTime,url,entryName,entryOwner,ownerTel,tenderee,tendereeTel,biddingAgency,biddingAgencTel,placeAddress,placeTime,publicityPeriod,bigPrice,oneTree,twoTree,threeTree,treeCount) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE reportTitle = reportTitle",
                     (item['reportTitle'],
                      item['sysTime'],
                      item['url'],
