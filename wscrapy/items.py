@@ -71,6 +71,7 @@ class ScggjyItem(scrapy.Item):
     oneReviewPrice = scrapy.Field()
     oneScore = scrapy.Field()
     count = scrapy.Field()
+    treeCount = scrapy.Field()
 
 
 # 笑话

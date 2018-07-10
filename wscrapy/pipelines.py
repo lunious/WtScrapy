@@ -5,11 +5,8 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
-
 import logging
-
 import pymysql
-
 from wscrapy import settings
 from scrapy.pipelines.files import FilesPipeline
 from urllib.parse import urlparse
@@ -62,10 +59,11 @@ class ScggjyPipeline(object):
         self.cursor = self.connect.cursor()
 
     def process_item(self, item, spider):
+
         if item['entryOwner'] != '':
             try:
                 self.cursor.execute(
-                    "insert into sggjyzbjg (reportTitle,sysTime,url,entryName,entryOwner,ownerTel,tenderee,tendereeTel,biddingAgency,biddingAgencTel,placeAddress,placeTime,publicityPeriod,bigPrice,oneTree,twoTree,threeTree) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE entryName = entryName",
+                    "insert into sggjyzbjg (reportTitle,sysTime,url,entryName,entryOwner,ownerTel,tenderee,tendereeTel,biddingAgency,biddingAgencTel,placeAddress,placeTime,publicityPeriod,bigPrice,oneTree,twoTree,threeTree,treeCount) value(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE entryName = entryName",
                     (item['reportTitle'],
                      item['sysTime'],
                      item['url'],
@@ -83,6 +81,7 @@ class ScggjyPipeline(object):
                      item['oneTree'],
                      item['twoTree'],
                      item['threeTree'],
+                     item['treeCount'],
                      ))
                 self.connect.commit()
             except Exception as error:
