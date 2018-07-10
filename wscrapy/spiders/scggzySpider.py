@@ -16,7 +16,7 @@ class ScggzyspiderSpider(scrapy.Spider):
     timeArray = time.strptime(now_time, "%Y-%m-%d %H:%M:%S")
     # 转换成时间戳
     timestamp = int(time.mktime(timeArray))
-    url = 'http://www.scggzy.gov.cn/Info/GetInfoListNew?keywords=&times=4&timesStart=&timesEnd=&province=&area=&businessType=project&informationType=TenderCandidateAnnounce&industryType='
+    url = 'http://www.scggzy.gov.cn/Info/GetInfoListNew?keywords=&times=3&timesStart=&timesEnd=&province=&area=&businessType=project&informationType=TenderCandidateAnnounce&industryType='
     start_urls = [url + '&page=' + str(page) + '&parm=' + str(timestamp)]
 
     def parse(self, response):
