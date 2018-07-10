@@ -53,8 +53,9 @@ class ScggjyPipeline(object):
             db=settings.MYSQL_DBNAME,
             user=settings.MYSQL_USER,
             passwd=settings.MYSQL_PASSWD,
-            # charset='utf8',
-            # use_unicode=True
+            port=settings.MYSQL_PORT,
+            charset='utf8',
+            use_unicode=False
         )
         self.cursor = self.connect.cursor()
 
