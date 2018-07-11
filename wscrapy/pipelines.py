@@ -6,7 +6,11 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
 import logging
+from typing import Any, Union
+
 import pymysql
+from pymysql.cursors import Cursor
+
 from wscrapy import settings
 from scrapy.pipelines.files import FilesPipeline
 from urllib.parse import urlparse
@@ -84,16 +88,8 @@ class ScggjyPipeline(object):
                      item['threeTree'],
                      item['treeCount'],
                      ))
-                self.connect.commit()
-            except Exception as error:
-                logging.log(error)
-            try:
                 self.cursor.execute("Insert into entryjglist(entryName,sysTime,type,entity,entityId) select reportTitle,sysTime,'工程中标结果','sggjyzbjg',id from sggjyzbjg where id not in(select entityId from entryjglist where  entity ='sggjyzbjg' ) ")
-                self.connect.commit()
-            except Exception as error:
-                logging.log(error)
-            try:
-                self.cursor.execute("update sggjy set sggjyzbjgId=(select id from sggjyzbjg where url =%s )", item['url'])
+                self.cursor.execute("update sggjy set sggjyzbjgId=(select id from sggjyzbjg  where sggjyzbjg.url = sggjy.url)")
                 self.connect.commit()
             except Exception as error:
                 logging.log(error)
