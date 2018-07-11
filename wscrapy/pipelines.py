@@ -92,6 +92,11 @@ class ScggjyPipeline(object):
                 self.connect.commit()
             except Exception as error:
                 logging.log(error)
+            try:
+                self.cursor.execute("update sggjy set sggjyzbjgId=(select id from sggjyzbjg where url =%s )", item['url'])
+                self.connect.commit()
+            except Exception as error:
+                logging.log(error)
             return item
 
     def close_spider(self, spider):

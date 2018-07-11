@@ -16,7 +16,7 @@ class ScggzyspiderSpider(scrapy.Spider):
     timeArray = time.strptime(now_time, "%Y-%m-%d %H:%M:%S")
     # 转换成时间戳
     timestamp = int(time.mktime(timeArray))
-    url = 'http://www.scggzy.gov.cn/Info/GetInfoListNew?keywords=&times=3&timesStart=&timesEnd=&province=&area=&businessType=project&informationType=TenderCandidateAnnounce&industryType='
+    url = 'http://www.scggzy.gov.cn/Info/GetInfoListNew?keywords=&times=2&timesStart=&timesEnd=&province=&area=&businessType=project&informationType=TenderCandidateAnnounce&industryType='
     start_urls = [url + '&page=' + str(page) + '&parm=' + str(timestamp)]
 
     def parse(self, response):
@@ -34,10 +34,10 @@ class ScggzyspiderSpider(scrapy.Spider):
             for item in items:
                 yield scrapy.Request(url=item['url'], meta={'meta': item}, callback=self.detail_parse)
 
-            if self.page < pageCount:
-                self.page += 1
-
-            yield scrapy.Request(url=self.url + '&page=' + str(self.page) + '&parm=' + str(self.timestamp))
+            # if self.page < pageCount:
+            #     self.page += 1
+            #
+            # yield scrapy.Request(url=self.url + '&page=' + str(self.page) + '&parm=' + str(self.timestamp))
 
     def detail_parse(self, response):
         item = response.meta['meta']
@@ -53,32 +53,6 @@ class ScggzyspiderSpider(scrapy.Spider):
         placeTime = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[5]/td[4]/text()').extract()
         publicityPeriod = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[6]/td[2]/text()').extract()
         bigPrice = Selector(text=res[0]).xpath('//div[@class="tablediv"]/table[1]//tr[6]/td[4]/text()').extract()
-
-        oneTree = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]//text()')
-        content1 = ''
-        for i in oneTree.extract():
-            content1 += i.strip() + '_'
-        if content1.startswith('_'):
-            item['oneTree'] = content1[6:-2].replace('__','_')
-        else:
-            item['oneTree'] = content1[4:-2]
-        twoTree = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]//text()')
-        content2 = ''
-        for i in twoTree.extract():
-            content2 += i.strip() + '_'
-        if content2.startswith('_'):
-            item['twoTree'] = content2[6:-2].replace('__', '_')
-        else:
-            item['twoTree'] = content2[4:-2]
-        threeTree = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]//text()')
-        content3 = ''
-        for i in threeTree.extract():
-            content3 += i.strip() + '_'
-        if content3.startswith('_'):
-            item['threeTree'] = content3[6:-2].replace('__', '_')
-        else:
-            item['threeTree'] = content3[4:-2]
-
         if entryName:
             item['entryName'] = entryName[0]
         else:
@@ -124,6 +98,168 @@ class ScggzyspiderSpider(scrapy.Spider):
         else:
             item['bigPrice'] = ''
 
+        td = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td').extract()
+        th = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th').extract()
+        if len(th) == 1 and len(td) == 4:
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[1]/text()').extract():
+                o1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[1]/text()').extract()[0]
+            else:
+                o1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[2]/text()').extract():
+                o2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[2]/text()').extract()[0]
+            else:
+                o2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[3]/text()').extract():
+                o3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[3]/text()').extract()[0]
+            else:
+                o3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[4]/text()').extract():
+                o4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[4]/text()').extract()[0]
+            else:
+                o4 = '无'
+            item['oneTree'] = o1.strip()+'_'+o2.strip()+'_'+o3.strip()+'_'+o4.strip()
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[1]/text()').extract():
+                t1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[1]/text()').extract()[0]
+            else:
+                t1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[2]/text()').extract():
+                t2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[2]/text()').extract()[0]
+            else:
+                t2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[3]/text()').extract():
+                t3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[3]/text()').extract()[0]
+            else:
+                t3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[4]/text()').extract():
+                t4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[4]/text()').extract()[0]
+            else:
+                t4 = '无'
+            item['twoTree'] = t1.strip() + '_' + t2.strip() + '_' + t3.strip() + '_' + t4.strip()
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[1]/text()'):
+                h1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[1]/text()').extract()[0]
+            else:
+                h1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[2]/text()').extract():
+                h2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[2]/text()').extract()[0]
+            else:
+                h2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[3]/text()').extract():
+                h3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[3]/text()').extract()[0]
+            else:
+                h3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[4]/text()').extract():
+                h4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[4]/text()').extract()[0]
+            else:
+                h4 = '无'
+            item['threeTree'] = h1.strip() + '_' + h2.strip() + '_' + h3.strip() + '_' + h4.strip()
+        elif len(th) == 4 and len(td) == 1:
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[1]/text()').extract():
+                o1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[1]/text()').extract()[0]
+            else:
+                o1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[2]/text()').extract():
+                o2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[2]/text()').extract()[0]
+            else:
+                o2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[3]/text()').extract():
+                o3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/th[3]/text()').extract()[0]
+            else:
+                o3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[4]/text()').extract():
+                o4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[4]/text()').extract()[0]
+            else:
+                o4 = '无'
+            item['oneTree'] = o1.strip()+'_'+o2.strip()+'_'+o3.strip()+'_'+o4.strip()
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[1]/text()').extract():
+                t1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[1]/text()').extract()[0]
+            else:
+                t1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[2]/text()').extract():
+                t2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[2]/text()').extract()[0]
+            else:
+                t2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[3]/text()').extract():
+                t3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[3]/text()').extract()[0]
+            else:
+                t3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[4]/text()').extract():
+                t4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/th[4]/text()').extract()[0]
+            else:
+                t4 = '无'
+            item['twoTree'] = t1.strip() + '_' + t2.strip() + '_' + t3.strip() + '_' + t4.strip()
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[1]/text()'):
+                h1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[1]/text()').extract()[0]
+            else:
+                h1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[2]/text()').extract():
+                h2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[2]/text()').extract()[0]
+            else:
+                h2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[3]/text()').extract():
+                h3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[3]/text()').extract()[0]
+            else:
+                h3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[4]/text()').extract():
+                h4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/th[4]/text()').extract()[0]
+            else:
+                h4 = '无'
+            item['threeTree'] = h1.strip() + '_' + h2.strip() + '_' + h3.strip() + '_' + h4.strip()
+        elif len(th) == 0 and len(td) == 5:
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[2]/text()').extract():
+                o1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[2]/text()').extract()[0]
+            else:
+                o1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[3]/text()').extract():
+                o2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[3]/text()').extract()[0]
+            else:
+                o2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[4]/text()').extract():
+                o3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[4]/text()').extract()[0]
+            else:
+                o3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[5]/text()').extract():
+                o4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[2]/td[5]/text()').extract()[0]
+            else:
+                o4 = '无'
+            item['oneTree'] = o1.strip()+'_'+o2.strip()+'_'+o3.strip()+'_'+o4.strip()
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[2]/text()').extract():
+                t1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[2]/text()').extract()[0]
+            else:
+                t1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[3]/text()').extract():
+                t2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[3]/text()').extract()[0]
+            else:
+                t2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[4]/text()').extract():
+                t3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[4]/text()').extract()[0]
+            else:
+                t3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[5]/text()').extract():
+                t4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[3]/td[5]/text()').extract()[0]
+            else:
+                t4 = '无'
+            item['twoTree'] = t1.strip() + '_' + t2.strip() + '_' + t3.strip() + '_' + t4.strip()
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[2]/text()'):
+                h1 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[2]/text()').extract()[0]
+            else:
+                h1 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[3]/text()').extract():
+                h2 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[3]/text()').extract()[0]
+            else:
+                h2 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[4]/text()').extract():
+                h3 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[4]/text()').extract()[0]
+            else:
+                h3 = '无'
+            if Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[5]/text()').extract():
+                h4 = Selector(text=res[0].strip()).xpath('//div[@class="tablediv"]/table[2]//tr[4]/td[5]/text()').extract()[0]
+            else:
+                h4 = '无'
+            item['threeTree'] = h1.strip() + '_' + h2.strip() + '_' + h3.strip() + '_' + h4.strip()
+        else:
+            item['oneTree'] = ''
+            item['twoTree'] = ''
+            item['threeTree'] = ''
         if item['oneTree'] or item['twoTree'] or item['threeTree']:
             item['treeCount'] = 3
         else:

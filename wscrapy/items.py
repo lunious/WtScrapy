@@ -47,6 +47,7 @@ class SinaItem(scrapy.Item):
 
 # 全国公共交易平台(四川)
 class ScggjyItem(scrapy.Item):
+    ly = scrapy.Field()
     reportTitle = scrapy.Field()
     sysTime = scrapy.Field()
     url = scrapy.Field()
