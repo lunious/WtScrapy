@@ -79,9 +79,9 @@ SPIDER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     # 'wscrapy.pipelines.DyttPipeline': 300,
     # 'wscrapy.pipelines.SinaPipeline': 300,
-    'wscrapy.pipelines.ScggjyPipeline': 300,
+    # 'wscrapy.pipelines.ScggjyPipeline': 300,
     # 'wscrapy.pipelines.JokePipeline': 300,
-    # 'wscrapy.pipelines.ZakerPipeline': 300,
+    'wscrapy.pipelines.ZakerPipeline': 300,
     # 启用MatplotlibPipeline
     # 'wscrapy.pipelines.MatplotlibPipeline': 1,
     # 'scrapy.pipelines.images.ImagesPipeline': 1,
@@ -111,17 +111,17 @@ IMAGES_STORE = 'download_images'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MYSQL_HOST = '101.37.30.136'  # ''120.78.161.254'  # 阿里云地址
-MYSQL_DBNAME = 'caiji_8_14'
-MYSQL_USER = 'root'
-MYSQL_PASSWD = 'adminroot1128'
-MYSQL_PORT = 8080
-
-# MYSQL_HOST = 'localhost'  # ''120.78.161.254'  # 阿里云地址
-# MYSQL_DBNAME = 'wscrapy'
+# MYSQL_HOST = '101.37.30.136'  # ''120.78.161.254'  # 阿里云地址
+# MYSQL_DBNAME = 'caiji_8_14'
 # MYSQL_USER = 'root'
-# MYSQL_PASSWD = 'Wzy562400.'
-# MYSQL_PORT = 3306
+# MYSQL_PASSWD = 'adminroot1128'
+# MYSQL_PORT = 8080
+
+MYSQL_HOST = 'localhost'  # ''120.78.161.254'  # 阿里云地址
+MYSQL_DBNAME = 'wscrapy'
+MYSQL_USER = 'root'
+MYSQL_PASSWD = 'Wzy562400.'
+MYSQL_PORT = 3306
 
 MY_PROXY = [
     'http://115.223.244.158:9000',

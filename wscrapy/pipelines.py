@@ -90,7 +90,13 @@ class ScggjyPipeline(object):
                      ))
                 self.cursor.execute("Insert into entryjglist(entryName,sysTime,type,entity,entityId) select reportTitle,sysTime,'工程中标结果','sggjyzbjg',id from sggjyzbjg where id not in(select entityId from entryjglist where  entity ='sggjyzbjg' ) ")
                 self.cursor.execute("update sggjy set sggjyzbjgId=(select id from sggjyzbjg  where sggjyzbjg.url = sggjy.url)")
-                self.connect.commit()
+                # self.cursor.execute("select sggjyzbjgId from sggjy where url = %s", item['url'])
+                # result = self.cursor.fetchone()
+                # if result == None:
+                #     self.cursor.execute("update sggjy set sggjyzbjgId=(select id from sggjyzbjg  where sggjyzbjg.url = sggjy.url)")
+                # else:
+                #     print(result[0])
+                # self.connect.commit()
             except Exception as error:
                 logging.log(error)
             return item
