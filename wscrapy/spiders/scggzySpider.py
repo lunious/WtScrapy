@@ -34,10 +34,10 @@ class ScggzyspiderSpider(scrapy.Spider):
             for item in items:
                 yield scrapy.Request(url=item['url'], meta={'meta': item}, callback=self.detail_parse)
 
-            # if self.page < pageCount:
-            #     self.page += 1
-            #
-            # yield scrapy.Request(url=self.url + '&page=' + str(self.page) + '&parm=' + str(self.timestamp))
+            if self.page < pageCount:
+                self.page += 1
+
+            yield scrapy.Request(url=self.url + '&page=' + str(self.page) + '&parm=' + str(self.timestamp))
 
     def detail_parse(self, response):
         item = response.meta['meta']

@@ -117,8 +117,9 @@ IMAGES_STORE = 'download_images'
 # MYSQL_PASSWD = 'adminroot1128'
 # MYSQL_PORT = 8080
 
-MYSQL_HOST = 'localhost'  # ''120.78.161.254'  # 阿里云地址
-MYSQL_DBNAME = 'wscrapy'
+# MYSQL_HOST = 'localhost'  # 本地地址
+MYSQL_HOST = '120.78.161.254'  # 阿里云地址
+MYSQL_DBNAME = 'wdjango'
 MYSQL_USER = 'root'
 MYSQL_PASSWD = 'Wzy562400.'
 MYSQL_PORT = 3306
